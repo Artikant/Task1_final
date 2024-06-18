@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/2024.1.119/styles/kendo.default-v2.min.css">
+<!-- jQuery -->
+<script src="https://kendo.cdn.telerik.com/2024.1.119/js/jquery.min.js"></script>
+<!-- Kendo UI JavaScript -->
+<script src="https://kendo.cdn.telerik.com/2024.1.119/js/kendo.all.min.js"></script>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6 d-flex justify-content-between">
+      <select class="form-select mb-3 me-2 " (change)="onDomainSelected($event)">
+        <option value="" disabled selected>Select Domain</option>
+        <option *ngFor="let domain of domainData" [value]="domain.domainId">{{ domain.domainName }}</option>
+      </select>
+      <select  class="form-select mb-3 ms-2" *ngIf="selectedTransportDomainId"(change)="onTransportationTypeSelected($event)">
+        <option value="" disabled selected>Select Transportation Type</option>
+        <option *ngFor="let type of transportationTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div> 
+<div class="container">
+  <div id="map" class="map-container" style="height: 830px; width: 100%;"></div>
+  <div *ngIf="domainSelected" class="toggle-button" (click)="toggleGrid()">
+    <div class="arrow-circle"></div>
+  </div>
+  <div class="grid-container" style="max-height: 500px;"  [class.hidden]="!gridVisible">
+    
+    <!-- <input type="text" class="form-control mb-2" placeholder="Search..." (input)="onSearch($event)" /> -->
+    <div class="search-container">
+      <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="searchTerm" (input)="onSearch($event)" />
+      <button *ngIf="searchTerm" (click)="clearSearch()" class="clear-button">&#x2715;</button>
+    </div>
+  <div *ngIf="gridData.length === 0">No records found</div>
+    <kendo-grid [data]="gridData">
+      <kendo-grid-column>
+        <ng-template kendoGridHeaderTemplate>
+          <input type="checkbox" (change)="onSelectAll($event)" />
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <input type="checkbox" [checked]="selectedCheckboxes[dataItem.id]" (change)="onCheckboxClick(dataItem, $event)" />
+        </ng-template>
+      </kendo-grid-column>
+      <ng-container *ngFor="let column of gridColumns">
+        <kendo-grid-column [field]="column" [title]="column"></kendo-grid-column>
+      </ng-container>
+    </kendo-grid>
+  </div>
+</div>
+
+
+    
+

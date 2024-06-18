@@ -2,6 +2,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "types": ["jquery", "kendo-ui"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "forceConsistentCasingInFileNames": true,
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,

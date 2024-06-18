@@ -4,8 +4,13 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "node"
+      "node",
+      "@angular/localize"
     ]
+  },
+  "/api": {
+    "target": "https://localhost:7074",
+    "secure": false
   },
   "files": [
     "src/main.ts",
